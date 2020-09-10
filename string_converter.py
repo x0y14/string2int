@@ -37,6 +37,30 @@ class StringConverter:
 		self.pos += 1
 		return c
 	
+	def exchange(self, s_num):
+		assert(s_num in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+
+		if s_num == '0':
+			return 0
+		elif s_num == '1':
+			return 1
+		elif s_num == '2':
+			return 2
+		elif s_num == '3':
+			return 3
+		elif s_num == '4':
+			return 4
+		elif s_num == '5':
+			return 5
+		elif s_num == '6':
+			return 6
+		elif s_num == '7':
+			return 7
+		elif s_num == '8':
+			return 8
+		elif s_num == '9':
+			return 9
+	
 	def find_dot(self):
 		appered_dot = False
 		origin = 0
@@ -66,24 +90,18 @@ class StringConverter:
 			if self.is_float == True:
 				if self.pos < self.origin:
 					c = self.consume_char()
-					# print(f'[{self.origin - self.pos}]: {c}')
-
-					# if c == '.':
-					# 	continue
-					numbs.append(float(c) * float(10 ** (self.origin - self.pos)))
+					c = self.exchange(c)
+					numbs.append(c * (10 ** (self.origin - self.pos)))
 				else:
 					c = self.consume_char()
 					if c == '.':
 						continue
-					# print(self.origin),
-					# print(self.pos)
-					numbs.append(float(c) * float(10 ** -(self.pos - self.origin - 1)))
-					# print(f'[-{self.pos - self.origin - 1}]: {c}')
+					c = self.exchange(c)
+					numbs.append(c * (10 ** -(self.pos - self.origin - 1)))
 			else:
 				c = self.consume_char()
-				# print(f'[{self.origin - self.pos +1}]: {c}')
-				numbs.append(float(c) * float(10 ** (self.origin - self.pos +1)))
-
+				c = self.exchange(c)
+				numbs.append(c * (10 ** (self.origin - self.pos +1)))
 		return numbs
 	
 	def convert(self):
@@ -94,10 +112,8 @@ class StringConverter:
 		if self.minus == True:
 			i *= -1
 		
-		if self.is_float == False:
-			return int(i)
-		else:
-			return i
+		# print(f'{i} (float: {self.is_float})')
+		return i
 
 
 # st = StringConverter(
